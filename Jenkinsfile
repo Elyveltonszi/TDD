@@ -50,7 +50,7 @@ pipeline {
                             -Dsonar.sources=. \
                             -Dsonar.host.url=$SONAR_HOST_URL \
                             -Dsonar.login=$SONAR_LOGIN \
-                            -Dsonar.tests=___testes___ \
+                            -Dsonar.tests=__testes__ \
                             -Dsonar.testExecutionReportPaths=test-report.xml \
                             -Dsonar.test.inclusions=**/*.test.ts \
                             -Dsonar.exclusions=coverage/lcov-report/**/*.*,node_modules/**/*.*,jest.config.js,reports/**/*.*,features/**/*.*,cucumber.js \
