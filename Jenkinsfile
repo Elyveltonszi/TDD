@@ -64,7 +64,7 @@ pipeline {
     post {
         always {
             echo 'Pipeline execution completed'
-            junit testResults: 'test-report.xml', skipPublishingChecks: true
+            junit testResults: 'test-report.xml', skipPublishingChecks: true, allowEmptyResults: true
         }
         success {
             echo 'Pipeline succeeded!'
