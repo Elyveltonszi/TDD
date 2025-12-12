@@ -1,0 +1,27 @@
+networks:
+  devops:
+    driver: bridge
+
+services:
+  sonarqube:
+    image: sonarqube:25.6.0.109173-community
+    container_name: sonarqube-server
+    ports:
+      - 9000:9000
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    networks:
+      - devops   
+
+  jenkins:
+    image: jenkins/jenkins:2.479.3
+    container_name: jenkins-server
+    user: root
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080
+      - 50000:50000
+    networks:
+      - devops
