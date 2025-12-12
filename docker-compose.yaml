@@ -2,6 +2,14 @@ networks:
   devops:
     driver: bridge
 
+volumes:
+  jenkins_home:
+    driver: local
+  sonarqube_data:
+    driver: local
+  sonarqube_logs:
+    driver: local
+
 services:
   sonarqube:
     image: sonarqube:25.6.0.109173-community
@@ -10,15 +18,21 @@ services:
       - 9000:9000
     environment:
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_logs:/opt/sonarqube/logs
     networks:
       - devops   
 
   jenkins:
-    image: jenkins/jenkins:2.479.3
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
     container_name: jenkins-server
     user: root
     privileged: true
     volumes:
+      - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 8080:8080
