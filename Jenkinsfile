@@ -43,7 +43,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 echo 'Running SonarQube analysis...'
-                withEnv(['SONAR_HOST_URL=http://sonarqube:9000', 'SONAR_LOGIN=sqa_6e5cdcc914363592ac8733825636c0a771c60c2c']) {
+                withEnv(['SONAR_HOST_URL=http://sonarqube:9000', 'SONAR_LOGIN=sqa_41c78a24443317373fe547c87f28abd5d3399091']) {
                     sh '''
                         npx sonar-scanner \
                             -Dsonar.projectKey=Bank \
