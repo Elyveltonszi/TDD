@@ -43,7 +43,20 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 echo 'Running SonarQube analysis...'
-                sh 'npm run sonar:scanner'
+                withEnv(['SONAR_HOST_URL=http://sonarqube:9000', 'SONAR_LOGIN=sqa_6e5cdcc914363592ac8733825636c0a771c60c2c']) {
+                    sh '''
+                        npx sonar-scanner \
+                            -Dsonar.projectKey=Bank \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=$SONAR_HOST_URL \
+                            -Dsonar.login=$SONAR_LOGIN \
+                            -Dsonar.tests=___testes___ \
+                            -Dsonar.testExecutionReportPaths=test-report.xml \
+                            -Dsonar.test.inclusions=**/*.test.ts \
+                            -Dsonar.exclusions=coverage/lcov-report/**/*.*,node_modules/**/*.*,jest.config.js,reports/**/*.*,features/**/*.*,cucumber.js \
+                            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+                    '''
+                }
             }
         }
     }
